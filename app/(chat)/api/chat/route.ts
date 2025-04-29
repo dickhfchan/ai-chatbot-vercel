@@ -4,7 +4,9 @@ import {
   createDataStreamResponse,
   smoothStream,
   streamText,
-} from 'ai';
+  experimental_createMCPClient,
+} from 'ai'; // Import the experimental_createMCPClient
+import { Experimental_StdioMCPTransport } from 'ai/mcp-stdio'; // Import the experimental_StdioMCPTransport
 import { auth, type UserType } from '@/app/(auth)/auth';
 import { systemPrompt } from '@/lib/ai/prompts';
 import {
@@ -25,10 +27,64 @@ import { isProductionEnvironment } from '@/lib/constants';
 import { myProvider } from '@/lib/ai/providers';
 import { entitlementsByUserType } from '@/lib/ai/entitlements';
 import { postRequestBodySchema, type PostRequestBody } from './schema';
+import dotenv from 'dotenv';
 
 export const maxDuration = 60;
 
 export async function POST(request: Request) {
+
+  // get the firecrawl api key from the environment variables
+  dotenv.config();
+  let clientOne;
+  const FIRECRAWL_API_KEY = process.env.FIRECRAWL_API_KEY;
+  const transport = new Experimental_StdioMCPTransport({
+    command: 'npx',
+    args: ["-y", "firecrawl-mcp"],
+    env:{
+        "FIRECRAWL_API_KEY": FIRECRAWL_API_KEY ?? ''
+      }
+  });
+  clientOne = await experimental_createMCPClient({
+    transport,
+  });
+
+  const toolSetOne = await clientOne.tools();
+
+  // "financial-datasets": {
+  //   "command": "/Users/dickchan/.local/bin/uv",
+  //   "args": [
+  //     "--directory",
+  //     "/Users/dickchan/projects/mcp-server-main",
+  //     "run",
+  //     "server.py"
+  //   ]
+  // },
+  // Set the financial-datasets tool
+//   "amap-maps": {
+//     "command": "npx",
+//     "args": [
+//         "-y",
+//         "@amap/amap-maps-mcp-server"
+//     ],
+//     "env": {
+//         "AMAP_MAPS_API_KEY": "f98157afed309f77140e0e5a8b365f7f"
+//     }
+// },
+  // const transport2 = new Experimental_StdioMCPTransport({
+  //   // Get the financial-datasets tool
+  //   command: "/Users/dickchan/.local/bin/uv",
+  //   args: ["--directory", "/Users/dickchan/projects/mcp-server-main", "run", "server.py"],
+  //   // env: {
+  //   //   "AMAP_MAPS_API_KEY": "f98157afed309f77140e0e5a8b365f7f"
+  //   // }
+  // });
+  // const clientTwo = await experimental_createMCPClient({
+  //   transport: transport2,
+  // });
+
+  // const toolSetTwo = await clientTwo.tools();
+  
+  
   let requestBody: PostRequestBody;
 
   try {
@@ -104,26 +160,30 @@ export async function POST(request: Request) {
           model: myProvider.languageModel(selectedChatModel),
           system: systemPrompt({ selectedChatModel }),
           messages,
-          maxSteps: 5,
-          experimental_activeTools:
-            selectedChatModel === 'chat-model-reasoning'
-              ? []
-              : [
-                  'getWeather',
-                  'createDocument',
-                  'updateDocument',
-                  'requestSuggestions',
-                ],
-          experimental_transform: smoothStream({ chunking: 'word' }),
+          maxSteps: 30,
+          // experimental_activeTools:
+          //   selectedChatModel === 'chat-model-reasoning'
+          //     ? []
+          //     : [
+          //         'getWeather',
+          //         'toolSetOne',
+          //         'createDocument',
+          //         'updateDocument',
+          //         'requestSuggestions',
+          //       ],
+          // experimental_transform: smoothStream({ chunking: 'word' }),
           experimental_generateMessageId: generateUUID,
           tools: {
             getWeather,
+            ...toolSetOne,
+            // ...toolSetTwo,
             createDocument: createDocument({ session, dataStream }),
             updateDocument: updateDocument({ session, dataStream }),
             requestSuggestions: requestSuggestions({
               session,
               dataStream,
             }),
+            
           },
           onFinish: async ({ response }) => {
             if (session.user?.id) {
