@@ -24,7 +24,7 @@ export const postRequestBodySchema = z.object({
       .optional(),
   }),
   // selectedChatModel: z.enum(['chat-model', 'chat-model-reasoning']),
-  selectedChatModel: z.enum(['benjamin-graham']),
+  selectedChatModel: z.enum(['benjamin-graham', 'warren-buffett', 'cathie-wood', 'charlie-munger', 'michael-burry', 'peter-lynch', 'phil-fisher', 'stanley-druckenmiller']),
 });
 
 export type PostRequestBody = z.infer<typeof postRequestBodySchema>;

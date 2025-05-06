@@ -13,24 +13,24 @@ interface SuggestedActionsProps {
 function PureSuggestedActions({ chatId, append }: SuggestedActionsProps) {
   const suggestedActions = [
     {
-      title: 'What is the analysis of the stock AAPL',
-      label: 'base on Ben Graham agent?',
+      title: 'Ask Ben Graham agent about',
+      label: 'AAPL Apple stock',
       action: 'AAPL',
     },
     {
-      title: 'What is the analysis of the stock AAPL',
-      label: 'base on Ben Graham agent? and format in document',
+      title: 'Ask Ben Graham agent about',
+      label: 'AAPL Apple stock and format in document',
       action: 'AAPL in document',
     },
     {
-      title: 'Help me write an essay',
-      label: `about silicon valley`,
-      action: `Help me write an essay about silicon valley`,
+      title: 'Ask Ben Graham agent about',
+      label: 'PDD 拼多多 stock',
+      action: 'PDD',
     },
     {
-      title: 'What is the weather',
-      label: 'in San Francisco?',
-      action: 'What is the weather in San Francisco?',
+      title: 'Ask Ben Graham agent about',
+      label: 'PDD 拼多多 stock and format in document',
+      action: 'PDD in document',
     },
   ];
 

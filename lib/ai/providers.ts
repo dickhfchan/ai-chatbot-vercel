@@ -26,6 +26,13 @@ export const myProvider = isTestEnvironment
       languageModels: {
         'chat-model': azure('gpt-4o'),
         'benjamin-graham': azure('gpt-4o'),
+        'warren-buffett': azure('gpt-4o'),
+        'cathie-wood': azure('gpt-4o'),
+        'charlie-munger': azure('gpt-4o'),
+        'michael-burry': azure('gpt-4o'),
+        'peter-lynch': azure('gpt-4o'),
+        'phil-fisher': azure('gpt-4o'),
+        'stanley-druckenmiller': azure('gpt-4o'), 
         'chat-model-reasoning': wrapLanguageModel({
           model: azure('gpt-4o'),
           middleware: extractReasoningMiddleware({ tagName: 'think' }),
