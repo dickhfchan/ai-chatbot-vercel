@@ -78,11 +78,23 @@ export async function POST(request: Request) {
     //   "AMAP_MAPS_API_KEY": "f98157afed309f77140e0e5a8b365f7f"
     // }
   });
+
+  const clientTwoRemote = await experimental_createMCPClient({
+    transport: {
+      type: 'sse',
+      url: 'http://18.139.219.30:3000/sse',
+      headers : {
+                "X-API-Key": "your-secure-api-key-here" 
+            }
+    },
+  });
+
   const clientTwo = await experimental_createMCPClient({
     transport: transport2,
   });
 
-  const toolSetTwo = await clientTwo.tools();
+  // const toolSetTwo = await clientTwo.tools();
+  const toolSetTwo = await clientTwoRemote.tools();
   
   
   let requestBody: PostRequestBody;
