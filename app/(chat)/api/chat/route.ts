@@ -37,18 +37,18 @@ export async function POST(request: Request) {
   dotenv.config();
   let clientOne;
   const FIRECRAWL_API_KEY = process.env.FIRECRAWL_API_KEY;
-  const transport = new Experimental_StdioMCPTransport({
-    command: 'npx',
-    args: ["-y", "firecrawl-mcp"],
-    env:{
-        "FIRECRAWL_API_KEY": FIRECRAWL_API_KEY ?? ''
-      }
-  });
-  clientOne = await experimental_createMCPClient({
-    transport,
-  });
+  // const transport = new Experimental_StdioMCPTransport({
+  //   command: 'npx',
+  //   args: ["-y", "firecrawl-mcp"],
+  //   env:{
+  //       "FIRECRAWL_API_KEY": FIRECRAWL_API_KEY ?? ''
+  //     }
+  // });
+  // clientOne = await experimental_createMCPClient({
+  //   transport,
+  // });
 
-  const toolSetOne = await clientOne.tools();
+  // const toolSetOne = await clientOne.tools();
 
   // "financial-datasets": {
   //   "command": "/Users/dickchan/.local/bin/uv",
