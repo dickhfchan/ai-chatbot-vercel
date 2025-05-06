@@ -70,14 +70,14 @@ export async function POST(request: Request) {
 //         "AMAP_MAPS_API_KEY": "f98157afed309f77140e0e5a8b365f7f"
 //     }
 // },
-  const transport2 = new Experimental_StdioMCPTransport({
-    // Get the financial-datasets tool
-    command: "/Users/dickchan/.local/bin/uv",
-    args: ["--directory", "/Users/dickchan/projects/mcp-server-main", "run", "server.py"],
-    // env: {
-    //   "AMAP_MAPS_API_KEY": "f98157afed309f77140e0e5a8b365f7f"
-    // }
-  });
+  // const transport2 = new Experimental_StdioMCPTransport({
+  //   // Get the financial-datasets tool
+  //   command: "/Users/dickchan/.local/bin/uv",
+  //   args: ["--directory", "/Users/dickchan/projects/mcp-server-main", "run", "server.py"],
+  //   // env: {
+  //   //   "AMAP_MAPS_API_KEY": "f98157afed309f77140e0e5a8b365f7f"
+  //   // }
+  // });
 
   const clientTwoRemote = await experimental_createMCPClient({
     transport: {
@@ -89,9 +89,9 @@ export async function POST(request: Request) {
     },
   });
 
-  const clientTwo = await experimental_createMCPClient({
-    transport: transport2,
-  });
+  // const clientTwo = await experimental_createMCPClient({
+  //   transport: transport2,
+  // });
 
   // const toolSetTwo = await clientTwo.tools();
   const toolSetTwo = await clientTwoRemote.tools();
