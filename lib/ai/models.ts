@@ -1,4 +1,4 @@
-export const DEFAULT_CHAT_MODEL: string = 'chat-model';
+export const DEFAULT_CHAT_MODEL: string = 'benjamin-graham';
 
 export interface ChatModel {
   id: string;
@@ -7,14 +7,19 @@ export interface ChatModel {
 }
 
 export const chatModels: Array<ChatModel> = [
+  // {
+  //   id: 'chat-model',
+  //   name: 'Chat model',
+  //   description: 'Primary model for all-purpose chat',
+  // },
+  // {
+  //   id: 'chat-model-reasoning',
+  //   name: 'Reasoning model',
+  //   description: 'Uses advanced reasoning',
+  // },
   {
-    id: 'chat-model',
-    name: 'Chat model',
-    description: 'Primary model for all-purpose chat',
-  },
-  {
-    id: 'chat-model-reasoning',
-    name: 'Reasoning model',
-    description: 'Uses advanced reasoning',
+    id: 'benjamin-graham',
+    name: 'Benjamin Graham model',
+    description: 'Uses Benjamin Graham principles',
   },
 ];

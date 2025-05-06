@@ -70,26 +70,28 @@ export async function POST(request: Request) {
 //         "AMAP_MAPS_API_KEY": "f98157afed309f77140e0e5a8b365f7f"
 //     }
 // },
-  // const transport2 = new Experimental_StdioMCPTransport({
-  //   // Get the financial-datasets tool
-  //   command: "/Users/dickchan/.local/bin/uv",
-  //   args: ["--directory", "/Users/dickchan/projects/mcp-server-main", "run", "server.py"],
-  //   // env: {
-  //   //   "AMAP_MAPS_API_KEY": "f98157afed309f77140e0e5a8b365f7f"
-  //   // }
-  // });
-  // const clientTwo = await experimental_createMCPClient({
-  //   transport: transport2,
-  // });
+  const transport2 = new Experimental_StdioMCPTransport({
+    // Get the financial-datasets tool
+    command: "/Users/dickchan/.local/bin/uv",
+    args: ["--directory", "/Users/dickchan/projects/mcp-server-main", "run", "server.py"],
+    // env: {
+    //   "AMAP_MAPS_API_KEY": "f98157afed309f77140e0e5a8b365f7f"
+    // }
+  });
+  const clientTwo = await experimental_createMCPClient({
+    transport: transport2,
+  });
 
-  // const toolSetTwo = await clientTwo.tools();
+  const toolSetTwo = await clientTwo.tools();
   
   
   let requestBody: PostRequestBody;
 
   try {
     const json = await request.json();
+    // console.log(json);
     requestBody = postRequestBodySchema.parse(json);
+    // console.log(requestBody);
   } catch (_) {
     return new Response('Invalid request body', { status: 400 });
   }
@@ -154,6 +156,10 @@ export async function POST(request: Request) {
       ],
     });
 
+    // console.log(selectedChatModel);
+    // console.log(systemPrompt({ selectedChatModel }));
+    // console.log(myProvider.languageModel(selectedChatModel));
+
     return createDataStreamResponse({
       execute: (dataStream) => {
         const result = streamText({
@@ -176,7 +182,7 @@ export async function POST(request: Request) {
           tools: {
             getWeather,
             ...toolSetOne,
-            // ...toolSetTwo,
+            ...toolSetTwo,
             createDocument: createDocument({ session, dataStream }),
             updateDocument: updateDocument({ session, dataStream }),
             requestSuggestions: requestSuggestions({
@@ -227,6 +233,7 @@ export async function POST(request: Request) {
           },
         });
 
+        // console.log(result);
         result.consumeStream();
 
         result.mergeIntoDataStream(dataStream, {
@@ -234,6 +241,8 @@ export async function POST(request: Request) {
         });
       },
       onError: () => {
+        // print the error
+        // console.error('Error');
         return 'Oops, an error occurred!';
       },
     });

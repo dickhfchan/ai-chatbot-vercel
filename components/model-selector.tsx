@@ -32,9 +32,13 @@ export function ModelSelector({
   const userType = session.user.type;
   const { availableChatModelIds } = entitlementsByUserType[userType];
 
+  console.log(chatModels);
+
   const availableChatModels = chatModels.filter((chatModel) =>
     availableChatModelIds.includes(chatModel.id),
   );
+
+  console.log(availableChatModels);
 
   const selectedChatModel = useMemo(
     () =>
