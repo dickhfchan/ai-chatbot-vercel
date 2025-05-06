@@ -72,8 +72,8 @@ export async function POST(request: Request) {
 // },
   const transport2 = new Experimental_StdioMCPTransport({
     // Get the financial-datasets tool
-    command: "/Users/dickchan/.local/bin/uv",
-    args: ["--directory", "/Users/dickchan/projects/mcp-server-main", "run", "server.py"],
+    command: "/home/ubuntu/.local/bin/uv",
+    args: ["--directory", "/home/ubuntu/financial_data_mcp", "run", "server.py"],
     // env: {
     //   "AMAP_MAPS_API_KEY": "f98157afed309f77140e0e5a8b365f7f"
     // }
