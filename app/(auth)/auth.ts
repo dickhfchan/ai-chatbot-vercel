@@ -62,12 +62,15 @@ export const {
         return { ...user, type: 'regular' };
       },
     }),
+    // guest auth
     Credentials({
       id: 'guest',
       credentials: {},
       async authorize() {
-        const [guestUser] = await createGuestUser();
-        return { ...guestUser, type: 'guest' };
+        // const [guestUser] = await createGuestUser();
+        // return { ...guestUser, type: 'guest' };
+        // disable guest auth
+        return null
       },
     }),
   ],
