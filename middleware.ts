@@ -24,10 +24,14 @@ export async function middleware(request: NextRequest) {
   });
 
   if (!token) {
+    if (pathname.startsWith('/login') || pathname.startsWith('/register')) {
+      return NextResponse.next();
+    }
     const redirectUrl = encodeURIComponent(request.url);
 
     return NextResponse.redirect(
-      new URL(`/api/auth/guest?redirectUrl=${redirectUrl}`, request.url),
+      // new URL(`/api/auth/guest?redirectUrl=${redirectUrl}`, request.url),
+      new URL(`/login?redirectUrl=${redirectUrl}`, request.url),
     );
   }
 
@@ -36,6 +40,7 @@ export async function middleware(request: NextRequest) {
   if (token && !isGuest && ['/login', '/register'].includes(pathname)) {
     return NextResponse.redirect(new URL('/', request.url));
   }
+console.log(isGuest, token);
 
   return NextResponse.next();
 }
