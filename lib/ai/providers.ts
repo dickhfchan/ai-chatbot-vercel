@@ -5,6 +5,7 @@ import {
 } from 'ai';
 // import { xai } from '@ai-sdk/xai';
 import { azure } from '@ai-sdk/azure';
+// import { groq } from '@ai-sdk/groq';
 import { isTestEnvironment } from '../constants';
 import {
   artifactModel,
@@ -12,6 +13,9 @@ import {
   reasoningModel,
   titleModel,
 } from './models.test';
+
+
+const llmProvider = azure('gpt-4o')
 
 export const myProvider = isTestEnvironment
   ? customProvider({
@@ -24,20 +28,20 @@ export const myProvider = isTestEnvironment
     })
   : customProvider({
       languageModels: {
-        'chat-model': azure('gpt-4o'),
-        'benjamin-graham': azure('gpt-4o'),
-        'warren-buffett': azure('gpt-4o'),
-        'cathie-wood': azure('gpt-4o'),
-        'charlie-munger': azure('gpt-4o'),
-        'michael-burry': azure('gpt-4o'),
-        'peter-lynch': azure('gpt-4o'),
-        'phil-fisher': azure('gpt-4o'),
-        'stanley-druckenmiller': azure('gpt-4o'), 
+        'chat-model': llmProvider,
+        'benjamin-graham': llmProvider,
+        'warren-buffett': llmProvider,
+        'cathie-wood': llmProvider,
+        'charlie-munger': llmProvider,
+        'michael-burry': llmProvider,
+        'peter-lynch': llmProvider,
+        'phil-fisher': llmProvider,
+        'stanley-druckenmiller': llmProvider, 
         'chat-model-reasoning': wrapLanguageModel({
-          model: azure('gpt-4o'),
+          model: llmProvider,
           middleware: extractReasoningMiddleware({ tagName: 'think' }),
         }),
-        'title-model': azure('gpt-4o'),
-        'artifact-model': azure('gpt-4o'),
+        'title-model': llmProvider,
+        'artifact-model': llmProvider,
       },
     });

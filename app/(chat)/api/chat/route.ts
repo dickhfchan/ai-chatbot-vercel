@@ -82,7 +82,7 @@ export async function POST(request: Request) {
   const clientTwoRemote = await experimental_createMCPClient({
     transport: {
       type: 'sse',
-      url: 'http://18.139.219.30:3000/sse',
+      url: 'https://wippujjoyamc.ap-southeast-1.clawcloudrun.com/sse',
       headers : {
                 "X-API-Key": "your-secure-api-key-here" 
             }
@@ -170,7 +170,7 @@ export async function POST(request: Request) {
 
     // console.log(selectedChatModel);
     // console.log(systemPrompt({ selectedChatModel }));
-    // console.log(myProvider.languageModel(selectedChatModel));
+    console.log(myProvider.languageModel(selectedChatModel));
 
     return createDataStreamResponse({
       execute: (dataStream) => {
