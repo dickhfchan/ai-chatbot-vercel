@@ -3,7 +3,7 @@ import { getToken } from 'next-auth/jwt';
 import { guestRegex, isDevelopmentEnvironment } from './lib/constants';
 
 export async function middleware(request: NextRequest) {
-  const { pathname } = request.nextUrl;
+  const { pathname,search } = request.nextUrl;
 
   /*
    * Playwright starts the dev server and requires a 200 status to
@@ -27,7 +27,7 @@ export async function middleware(request: NextRequest) {
     if (pathname.startsWith('/login') || pathname.startsWith('/register')) {
       return NextResponse.next();
     }
-    const redirectUrl = encodeURIComponent(request.url);
+    const redirectUrl = encodeURIComponent(pathname + search);
 
     return NextResponse.redirect(
       // new URL(`/api/auth/guest?redirectUrl=${redirectUrl}`, request.url),
