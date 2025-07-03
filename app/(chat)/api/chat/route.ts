@@ -82,7 +82,8 @@ export async function POST(request: Request) {
   const clientTwoRemote = await experimental_createMCPClient({
     transport: {
       type: 'sse',
-      url: 'http://18.139.219.30:3000/sse',
+      // url: 'http://18.139.219.30:3000/sse',
+      url: 'http://18.141.197.171:3000/sse',
       headers : {
                 "X-API-Key": "your-secure-api-key-here" 
             }
