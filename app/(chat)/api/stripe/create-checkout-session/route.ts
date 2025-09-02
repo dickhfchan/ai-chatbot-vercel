@@ -8,6 +8,15 @@ const stripe = new Stripe(process.env.STRIPE_SECRET_KEY!, {
 
 export async function POST(request: NextRequest) {
   try {
+    // Check if Stripe secret key is configured
+    if (!process.env.STRIPE_SECRET_KEY) {
+      console.error('STRIPE_SECRET_KEY environment variable is not set');
+      return NextResponse.json(
+        { error: 'Stripe configuration missing' },
+        { status: 500 }
+      );
+    }
+
     const session = await auth();
     
     if (!session?.user?.id) {
@@ -19,6 +28,8 @@ export async function POST(request: NextRequest) {
     if (!priceId) {
       return NextResponse.json({ error: 'Price ID is required' }, { status: 400 });
     }
+
+    console.log('Creating checkout session for user:', session.user.id, 'with price:', priceId);
 
     const checkoutSession = await stripe.checkout.sessions.create({
       mode: 'subscription',
@@ -37,11 +48,29 @@ export async function POST(request: NextRequest) {
       },
     });
 
+    console.log('Checkout session created successfully:', checkoutSession.id);
     return NextResponse.json({ url: checkoutSession.url });
   } catch (error) {
     console.error('Error creating checkout session:', error);
+    
+    // Provide more specific error messages
+    if (error instanceof Error) {
+      if (error.message.includes('No such price')) {
+        return NextResponse.json(
+          { error: 'Invalid price ID. Please check your Stripe configuration.' },
+          { status: 400 }
+        );
+      }
+      if (error.message.includes('Invalid API Key')) {
+        return NextResponse.json(
+          { error: 'Invalid Stripe API key. Please check your configuration.' },
+          { status: 500 }
+        );
+      }
+    }
+    
     return NextResponse.json(
-      { error: 'Internal server error' },
+      { error: 'Internal server error', details: error instanceof Error ? error.message : 'Unknown error' },
       { status: 500 }
     );
   }
