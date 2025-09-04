@@ -32,7 +32,6 @@ import dotenv from 'dotenv';
 export const maxDuration = 60;
 
 export async function POST(request: Request) {
-
   // get the firecrawl api key from the environment variables
   dotenv.config();
   let clientOne;
@@ -60,16 +59,16 @@ export async function POST(request: Request) {
   //   ]
   // },
   // Set the financial-datasets tool
-//   "amap-maps": {
-//     "command": "npx",
-//     "args": [
-//         "-y",
-//         "@amap/amap-maps-mcp-server"
-//     ],
-//     "env": {
-//         "AMAP_MAPS_API_KEY": "f98157afed309f77140e0e5a8b365f7f"
-//     }
-// },
+  //   "amap-maps": {
+  //     "command": "npx",
+  //     "args": [
+  //         "-y",
+  //         "@amap/amap-maps-mcp-server"
+  //     ],
+  //     "env": {
+  //         "AMAP_MAPS_API_KEY": "f98157afed309f77140e0e5a8b365f7f"
+  //     }
+  // },
   // const transport2 = new Experimental_StdioMCPTransport({
   //   // Get the financial-datasets tool
   //   command: "/Users/dickchan/.local/bin/uv",
@@ -83,10 +82,11 @@ export async function POST(request: Request) {
     transport: {
       type: 'sse',
       // url: 'http://18.139.219.30:3000/sse',
-      url: 'http://18.141.197.171:3000/sse',
-      headers : {
-                "X-API-Key": "your-secure-api-key-here" 
-            }
+      // url: 'http://18.141.197.171:3000/sse',
+      url: 'http://107.20.73.59:3000/sse',
+      headers: {
+        'X-API-Key': 'your-secure-api-key-here',
+      },
     },
   });
 
@@ -96,8 +96,7 @@ export async function POST(request: Request) {
 
   // const toolSetTwo = await clientTwo.tools();
   const toolSetTwo = await clientTwoRemote.tools();
-  
-  
+
   let requestBody: PostRequestBody;
 
   try {
@@ -201,7 +200,6 @@ export async function POST(request: Request) {
               session,
               dataStream,
             }),
-            
           },
           onFinish: async ({ response }) => {
             if (session.user?.id) {
