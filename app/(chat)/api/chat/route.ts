@@ -35,7 +35,10 @@ export async function POST(request: Request) {
   // get the firecrawl api key from the environment variables
   dotenv.config();
   let clientOne;
-  const FIRECRAWL_API_KEY = process.env.FIRECRAWL_API_KEY;
+  // const FIRECRAWL_API_KEY = process.env.FIRECRAWL_API_KEY;
+
+  const FIN_DATA_MCP = process.env.FIN_DATA_MCP;
+
   // const transport = new Experimental_StdioMCPTransport({
   //   command: 'npx',
   //   args: ["-y", "firecrawl-mcp"],
@@ -83,7 +86,7 @@ export async function POST(request: Request) {
       type: 'sse',
       // url: 'http://18.139.219.30:3000/sse',
       // url: 'http://18.141.197.171:3000/sse',
-      url: 'http://107.20.73.59:3000/sse',
+      url: FIN_DATA_MCP ?? '',
       headers: {
         'X-API-Key': 'your-secure-api-key-here',
       },
