@@ -38,6 +38,7 @@ export async function POST(request: Request) {
   // const FIRECRAWL_API_KEY = process.env.FIRECRAWL_API_KEY;
 
   const FIN_DATA_MCP = process.env.FIN_DATA_MCP;
+  const FIN_DATA_API_KEY = process.env.FIN_DATA_API_KEY;
 
   // const transport = new Experimental_StdioMCPTransport({
   //   command: 'npx',
@@ -81,6 +82,8 @@ export async function POST(request: Request) {
   //   // }
   // });
 
+  console.log(FIN_DATA_MCP);
+
   const clientTwoRemote = await experimental_createMCPClient({
     transport: {
       type: 'sse',
@@ -88,7 +91,7 @@ export async function POST(request: Request) {
       // url: 'http://18.141.197.171:3000/sse',
       url: FIN_DATA_MCP ?? '',
       headers: {
-        'X-API-Key': 'your-secure-api-key-here',
+        'X-API-Key': FIN_DATA_API_KEY ?? '',
       },
     },
   });
