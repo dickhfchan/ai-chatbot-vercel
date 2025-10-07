@@ -82,7 +82,7 @@ export async function POST(request: Request) {
   //   // }
   // });
 
-  console.log(FIN_DATA_MCP);
+  // console.log(FIN_DATA_MCP);
 
   const clientTwoRemote = await experimental_createMCPClient({
     transport: {

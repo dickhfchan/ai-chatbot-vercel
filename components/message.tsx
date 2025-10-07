@@ -18,7 +18,7 @@ import { Tooltip, TooltipContent, TooltipTrigger } from './ui/tooltip';
 import { MessageEditor } from './message-editor';
 import { DocumentPreview } from './document-preview';
 import { MessageReasoning } from './message-reasoning';
-import { UseChatHelpers } from '@ai-sdk/react';
+import type { UseChatHelpers } from '@ai-sdk/react';
 
 const PurePreviewMessage = ({
   chatId,
@@ -206,7 +206,18 @@ const PurePreviewMessage = ({
                           isReadonly={isReadonly}
                         />
                       ) : (
-                        <pre>{JSON.stringify(result, null, 2)}</pre>
+                        <div className="bg-blue-50 dark:bg-blue-900/20 rounded-lg p-3 border border-blue-200 dark:border-blue-800">
+                          <div className="text-sm text-blue-700 dark:text-blue-300 mb-2 flex items-center gap-2">
+                            <span className="font-medium">
+                              📊 Financial Data Retrieved
+                            </span>
+                          </div>
+                          <div className="text-xs text-gray-600 dark:text-gray-400">
+                            Data from {toolName} tool has been processed. The AI
+                            can now analyze this information to answer your
+                            questions.
+                          </div>
+                        </div>
                       )}
                     </div>
                   );
